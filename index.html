@@ -17,6 +17,7 @@
   --neon-green:#39ff14;
   --neon-yellow:#ffea00;
   --neon-red:#ff3860;
+  --neon-orange:#ff9500;
   --text-main:#e8eaff;
   --text-dim:#9aa0c7;
 }
@@ -120,15 +121,16 @@ header{
 .intro-card p b{color:var(--neon-yellow)}
 
 .topics-grid{
-  display:grid;grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
-  gap:15px;margin-top:20px;
+  display:grid;grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+  gap:18px;margin-top:20px;
 }
 .topic-card{
   background:linear-gradient(135deg, rgba(0,243,255,0.08), rgba(255,0,234,0.05));
   border:1px solid rgba(0,243,255,0.25);
   border-radius:14px;padding:18px;
-  cursor:pointer;transition:all 0.3s ease;
+  transition:all 0.3s ease;
   position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
 }
 .topic-card::before{
   content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
@@ -146,15 +148,182 @@ header{
   font-size:0.8rem;color:var(--neon-pink);
   letter-spacing:2px;margin-bottom:6px;
 }
-.topic-title{font-size:1.05rem;font-weight:700;color:var(--text-main);line-height:1.4}
+.topic-title{font-size:1.05rem;font-weight:700;color:var(--text-main);line-height:1.4;margin-bottom:12px}
 .topic-meta{
-  margin-top:10px;display:flex;justify-content:space-between;align-items:center;
-  font-size:0.85rem;color:var(--text-dim);
+  margin-top:auto;display:flex;justify-content:space-between;align-items:center;
+  font-size:0.85rem;color:var(--text-dim);gap:8px;flex-wrap:wrap;
 }
 .topic-badge{
   background:rgba(57,255,20,0.15);color:var(--neon-green);
   padding:3px 10px;border-radius:20px;font-size:0.75rem;
   border:1px solid rgba(57,255,20,0.3);
+}
+
+/* Кнопка Скилл-ап */
+.skillup-btn{
+  background:linear-gradient(135deg, rgba(255,149,0,0.15), rgba(255,234,0,0.1));
+  border:1px solid var(--neon-orange);
+  color:var(--neon-yellow);
+  padding:8px 14px;border-radius:10px;
+  font-size:0.85rem;font-weight:700;
+  cursor:pointer;transition:all 0.3s ease;
+  font-family:inherit;
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:10px;
+  letter-spacing:0.5px;
+}
+.skillup-btn:hover{
+  background:linear-gradient(135deg, rgba(255,149,0,0.3), rgba(255,234,0,0.2));
+  box-shadow:0 0 20px rgba(255,149,0,0.4);
+  transform:translateY(-2px);
+}
+.skillup-btn .bolt{
+  display:inline-block;
+  animation:boltPulse 1.5s ease-in-out infinite;
+}
+@keyframes boltPulse{
+  0%,100%{transform:scale(1);opacity:1}
+  50%{transform:scale(1.3);opacity:0.7}
+}
+
+.exam-btn{
+  background:linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+  border:none;color:#fff;
+  padding:10px 16px;border-radius:10px;
+  font-size:0.9rem;font-weight:700;
+  cursor:pointer;transition:all 0.3s ease;
+  font-family:inherit;
+  margin-top:10px;
+  letter-spacing:0.5px;
+}
+.exam-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(255,0,234,0.4);
+}
+
+/* Модальное окно конспекта */
+.modal-overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(8px);
+  z-index:100;
+  display:none;
+  align-items:center;justify-content:center;
+  padding:20px;
+  animation:fadeIn 0.3s ease;
+}
+.modal-overlay.show{display:flex}
+.modal{
+  background:linear-gradient(135deg, #0a0f2c, #1a1f4c);
+  border:2px solid var(--neon-orange);
+  border-radius:20px;
+  max-width:750px;width:100%;
+  max-height:85vh;
+  overflow-y:auto;
+  padding:30px;
+  box-shadow:0 0 60px rgba(255,149,0,0.4), 0 0 100px rgba(255,234,0,0.2);
+  position:relative;
+  animation:modalSlide 0.4s ease;
+}
+@keyframes modalSlide{
+  from{opacity:0;transform:translateY(30px) scale(0.95)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+.modal::-webkit-scrollbar{width:8px}
+.modal::-webkit-scrollbar-track{background:rgba(255,255,255,0.05);border-radius:10px}
+.modal::-webkit-scrollbar-thumb{background:linear-gradient(var(--neon-orange),var(--neon-yellow));border-radius:10px}
+
+.modal-close{
+  position:absolute;top:15px;right:15px;
+  background:rgba(255,56,96,0.2);
+  border:1px solid var(--neon-red);
+  color:var(--neon-red);
+  width:36px;height:36px;border-radius:50%;
+  cursor:pointer;font-size:1.2rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.3s ease;
+}
+.modal-close:hover{
+  background:var(--neon-red);color:#fff;
+  transform:rotate(90deg);
+}
+.modal-header{
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:20px;padding-bottom:15px;
+  border-bottom:1px solid rgba(255,149,0,0.3);
+}
+.modal-icon{
+  font-size:2.5rem;
+  animation:boltPulse 1.5s ease-in-out infinite;
+}
+.modal-title{
+  font-family:'Orbitron',sans-serif;
+  font-size:1.3rem;
+  color:var(--neon-yellow);
+  letter-spacing:1px;
+}
+.modal-subtitle{
+  color:var(--text-dim);font-size:0.9rem;margin-top:4px;
+}
+.modal-body{line-height:1.8;color:var(--text-main)}
+.modal-body h3{
+  color:var(--neon-blue);font-size:1.1rem;
+  margin:18px 0 10px;
+  display:flex;align-items:center;gap:8px;
+  border-left:3px solid var(--neon-blue);
+  padding-left:10px;
+}
+.modal-body h3:first-child{margin-top:0}
+.modal-body ul{
+  list-style:none;padding-left:0;margin:10px 0;
+}
+.modal-body ul li{
+  padding:6px 0 6px 25px;
+  position:relative;
+  color:var(--text-main);
+}
+.modal-body ul li::before{
+  content:'⚡';
+  position:absolute;left:0;top:6px;
+  color:var(--neon-yellow);
+}
+.modal-body .formula{
+  background:rgba(57,255,20,0.1);
+  border:1px solid rgba(57,255,20,0.3);
+  border-radius:10px;
+  padding:12px 16px;
+  margin:10px 0;
+  font-family:'Courier New',monospace;
+  color:var(--neon-green);
+  font-size:1.05rem;
+  font-weight:700;
+  text-align:center;
+  letter-spacing:1px;
+}
+.modal-body .fact{
+  background:rgba(0,243,255,0.08);
+  border-left:3px solid var(--neon-blue);
+  padding:10px 15px;
+  margin:10px 0;
+  border-radius:0 10px 10px 0;
+  color:var(--text-main);
+  font-size:0.95rem;
+}
+.modal-body .fact::before{
+  content:'💡 ';
+  font-size:1.1rem;
+}
+.modal-body b{color:var(--neon-yellow)}
+.modal-body .def{
+  background:rgba(255,0,234,0.08);
+  border-left:3px solid var(--neon-pink);
+  padding:10px 15px;
+  margin:10px 0;
+  border-radius:0 10px 10px 0;
+  color:var(--text-main);
+}
+.modal-body .def::before{
+  content:'📖 ';
 }
 
 .exam-header{
@@ -335,6 +504,8 @@ header{
   .q-text{font-size:1.1rem}
   .intro-card, .question-card, .exam-header{padding:20px}
   .topic-card{padding:15px}
+  .modal{padding:20px}
+  .modal-title{font-size:1.1rem}
 }
 </style>
 </head>
@@ -360,8 +531,8 @@ header{
       <h2>🚀 Йоу, бро! Готов прокачать скиллы?</h2>
       <p>
         Выбирай любую тему из учебника <b>А.В. Перышкина</b> — и погнали! По каждой теме тебя ждёт <b>мини-экзамен из 5 вопросов</b>. 
-        Отвечаешь верно — получаешь респект 🔥. Ошибаешься — сразу разбор полётов с пояснениями, чтобы ты больше не тупил. 
-        В конце — твой итоговый счёт. <b>Залетай, будет имба!</b>
+        Перед экзаменом можешь нажать <b>⚡ Скилл-ап</b> — там конспект с базой по теме. 
+        Отвечаешь верно — получаешь респект 🔥. Ошибаешься — сразу разбор полётов. <b>Залетай, будет имба!</b>
       </p>
     </div>
     <div class="topics-grid" id="topicsGrid"></div>
@@ -405,7 +576,469 @@ header{
   </div>
 </div>
 
+<!-- Модалка конспекта -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-header">
+      <div class="modal-icon">⚡</div>
+      <div>
+        <div class="modal-title" id="modalTitle">СКИЛЛ-АП</div>
+        <div class="modal-subtitle" id="modalSubtitle">База по теме</div>
+      </div>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
 <script>
+// ========== БАЗА КОНСПЕКТОВ ==========
+const conspects = {
+1: `<h3>🎯 Что такое физика?</h3>
+<div class="def"><b>Физика</b> (от греч. «physis» — природа) — наука о наиболее общих законах природы.</div>
+<ul>
+<li>Изучает: механические, тепловые, электрические, магнитные, звуковые и световые явления</li>
+<li>Все эти явления называют <b>физическими</b></li>
+<li>Физическое явление — любое изменение в природе <b>без изменения состава вещества</b></li>
+</ul>
+
+<h3>🧱 Физические тела и вещества</h3>
+<div class="def"><b>Физическое тело</b> — любой предмет (камень, капля воды, Луна).</div>
+<div class="def"><b>Вещество</b> — то, из чего состоит тело (железо, вода, резина).</div>
+<div class="def"><b>Материя</b> — всё, что существует во Вселенной (вещества + поля).</div>
+<div class="fact">Вода — вещество, капля воды — физическое тело. Алюминий — вещество, алюминиевая ложка — тело.</div>
+
+<h3>🔬 Источники знаний</h3>
+<ul>
+<li><b>Наблюдения</b> — просто смотрим на явление</li>
+<li><b>Опыты (эксперименты)</b> — проводят с целью, по плану, с гипотезой</li>
+<li>Источники знаний: <b>наблюдения и опыты</b></li>
+</ul>`,
+
+2: `<h3>📏 Физические величины</h3>
+<div class="def"><b>Физическая величина</b> — то, что можно измерить (длина, масса, скорость, время).</div>
+<div class="def"><b>Измерить величину</b> — значит сравнить её с однородной величиной, принятой за единицу.</div>
+
+<h3>🔢 Система СИ</h3>
+<ul>
+<li>Длина — <b>метр (м)</b></li>
+<li>Время — <b>секунда (с)</b></li>
+<li>Масса — <b>килограмм (кг)</b></li>
+</ul>
+<div class="formula">1 км = 1000 м; 1 м = 100 см; 1 см = 10 мм</div>
+
+<h3>📐 Цена деления прибора</h3>
+<div class="formula">Цена деления = (большее значение − меньшее) / число делений</div>
+<div class="fact">Погрешность измерения = ½ цены деления. Результат: A = a ± Δa</div>
+
+<h3>⚙️ Физика и техника</h3>
+<ul>
+<li>Двигатель внутреннего сгорания → изучение тепловых явлений</li>
+<li>Ньютон — законы механики и тяготения</li>
+<li>Максвелл — теория электромагнитного поля</li>
+<li>Королёв, Гагарин — космос</li>
+</ul>`,
+
+3: `<h3>🧬 Строение вещества</h3>
+<div class="def">Все тела состоят из мельчайших частиц — <b>молекул</b> и <b>атомов</b>, между которыми есть промежутки.</div>
+<ul>
+<li>Идею высказал <b>Демокрит</b> (2500 лет назад)</li>
+<li>Объём тел меняется при нагревании/охлаждении</li>
+<li>Вещества смешиваются — значит, между частицами есть пустота</li>
+</ul>
+
+<h3>💧 Молекулы</h3>
+<div class="def"><b>Молекула</b> — наименьшая частица данного вещества, сохраняющая его свойства.</div>
+<div class="formula">Размер молекулы воды ≈ 10⁻¹⁰ м (0,0000000001 м)</div>
+<ul>
+<li>10 млн молекул воды в ряд = нить длиной всего 2 мм</li>
+<li>Молекулы одного вещества <b>одинаковы</b></li>
+<li>Молекулы состоят из <b>атомов</b></li>
+<li>Молекула воды H₂O = 2 атома водорода + 1 атом кислорода</li>
+</ul>
+<div class="fact">В 1 см³ воздуха около 2,7·10¹⁹ молекул. Через маленькое отверстие пропускают миллион молекул в секунду — всё количество улетит за 840 000 лет!</div>`,
+
+4: `<h3>🌬️ Диффузия</h3>
+<div class="def"><b>Диффузия</b> — явление взаимного проникновения молекул одного вещества в промежутки между молекулами другого.</div>
+<ul>
+<li>Примеры: распространение запахов, засолка овощей, цементация стали</li>
+<li>Происходит из-за <b>беспорядочного движения</b> молекул</li>
+</ul>
+
+<h3>⚡ Скорость диффузии</h3>
+<ul>
+<li>В <b>газах</b> — быстрее всего (большие расстояния, высокая скорость)</li>
+<li>В <b>жидкостях</b> — медленнее</li>
+<li>В <b>твёрдых телах</b> — очень медленно (золото и свинец проникают на 1 мм за 4-5 лет!)</li>
+</ul>
+<div class="formula">С ростом температуры → скорость молекул растёт → диффузия ускоряется</div>
+<div class="fact">Диффузия поддерживает однородный состав воздуха у поверхности Земли и способствует нормальному питанию растений.</div>`,
+
+5: `<h3>🧊💧💨 Три состояния вещества</h3>
+<ul>
+<li><b>Твёрдое</b> (лёд) — сохраняет форму и объём</li>
+<li><b>Жидкое</b> (вода) — сохраняет объём, меняет форму</li>
+<li><b>Газообразное</b> (пар) — не имеет ни формы, ни постоянного объёма</li>
+</ul>
+
+<h3>🔍 Различия в строении</h3>
+<div class="def"><b>Твёрдые тела:</b> молекулы плотно упакованы, колеблются около своих мест.</div>
+<div class="def"><b>Жидкости:</b> молекулы близко, но могут перескакивать с места на место.</div>
+<div class="def"><b>Газы:</b> расстояния между молекулами в десятки раз больше самих молекул.</div>
+
+<div class="fact">При переходе из одного состояния в другое (лёд → вода → пар) МОЛЕКУЛЫ НЕ МЕНЯЮТСЯ! Меняется только их расположение и характер движения.</div>
+
+<h3>💨 Почему газы занимают весь объём?</h3>
+<ul>
+<li>Расстояния между молекулами огромные</li>
+<li>Силы притяжения почти нулевые</li>
+<li>Молекулы летают во все стороны</li>
+</ul>`,
+
+6: `<h3>🚗 Механическое движение</h3>
+<div class="def"><b>Механическое движение</b> — изменение положения тела относительно других тел с течением времени.</div>
+<div class="fact">Движение ВСЕГДА относительно! Сидя в поезде, ты движешься относительно земли, но покоишься относительно вагона.</div>
+
+<h3>📍 Траектория и путь</h3>
+<div class="def"><b>Траектория</b> — линия, по которой движется тело.</div>
+<div class="def"><b>Путь</b> — длина траектории.</div>
+<div class="formula">Единица пути в СИ — метр (м)</div>
+
+<h3>⚡ Скорость</h3>
+<div class="formula">v = s / t</div>
+<ul>
+<li>v — скорость, s — путь, t — время</li>
+<li>Единица в СИ: м/с</li>
+<li>Скорость — <b>векторная</b> величина (имеет направление!)</li>
+</ul>
+<div class="formula">Перевод: км/ч → м/с: делим на 3,6 (72 км/ч = 20 м/с)</div>
+
+<h3>📊 Средняя скорость</h3>
+<div class="formula">v_ср = s_общее / t_всё</div>
+<div class="fact">Нельзя среднюю скорость считать как среднее арифметическое скоростей!</div>`,
+
+7: `<h3>🎯 Инерция</h3>
+<div class="def"><b>Инерция</b> — явление сохранения скорости телом, когда на него не действуют другие тела.</div>
+<ul>
+<li>Открыл <b>Галилео Галилей</b></li>
+<li>Если на тело не действуют — оно движется с постоянной скоростью</li>
+<li>Велосипед останавливается из-за трения, а не «сам по себе»</li>
+</ul>
+
+<h3>🤝 Взаимодействие тел</h3>
+<div class="def">При взаимодействии <b>оба тела</b> изменяют свою скорость.</div>
+<div class="fact">Чем меньше скорость, приобретённая телом при взаимодействии, тем больше его масса (тело более инертное).</div>
+
+<h3>⚖️ Масса</h3>
+<div class="def"><b>Масса</b> — физическая величина, характеризующая инертность тела.</div>
+<div class="formula">Единица массы в СИ — килограмм (кг)</div>
+<div class="formula">1 т = 1000 кг; 1 кг = 1000 г; 1 г = 1000 мг</div>
+<div class="fact">Эталон 1 кг — цилиндр из сплава платины и иридия, хранится в Севре (Франция).</div>`,
+
+8: `<h3>💎 Плотность вещества</h3>
+<div class="def"><b>Плотность</b> — физическая величина, равная массе вещества в единице объёма.</div>
+<div class="formula">ρ = m / V</div>
+<ul>
+<li>ρ (ро) — плотность</li>
+<li>m — масса</li>
+<li>V — объём</li>
+</ul>
+<div class="formula">Единица плотности в СИ: кг/м³</div>
+
+<h3>📊 Важные значения</h3>
+<div class="fact">Плотность воды = 1000 кг/м³ = 1 г/см³. Плотность льда = 900 кг/м³. Плотность водяного пара = 0,59 кг/м³.</div>
+<div class="fact">Плотность одного и того же вещества в разных состояниях РАЗЛИЧНА!</div>
+
+<h3>🧮 Производные формулы</h3>
+<div class="formula">m = ρ · V (масса = плотность × объём)</div>
+<div class="formula">V = m / ρ (объём = масса / плотность)</div>`,
+
+9: `<h3>💪 Сила</h3>
+<div class="def"><b>Сила</b> — мера взаимодействия тел. Причина изменения скорости тела.</div>
+<ul>
+<li>Обозначается <b>F</b> (со стрелкой — векторная величина)</li>
+<li>Единица — <b>Ньютон (Н)</b></li>
+<li>Важны: модуль, направление, точка приложения</li>
+</ul>
+
+<h3>🌍 Явление тяготения</h3>
+<div class="def"><b>Всемирное тяготение</b> — все тела Вселенной притягивают друг друга.</div>
+<ul>
+<li>Открыл <b>Исаак Ньютон</b></li>
+<li>Чем больше массы — тем больше сила притяжения</li>
+<li>Чем больше расстояние — тем меньше сила</li>
+</ul>
+
+<h3>⬇️ Сила тяжести</h3>
+<div class="def"><b>Сила тяжести</b> — сила, с которой Земля притягивает тело.</div>
+<div class="formula">F = m · g, где g ≈ 9,8 Н/кг (округляют до 10)</div>
+<ul>
+<li>Направлена всегда вертикально вниз</li>
+<li>Приложена к самому телу</li>
+<li>На 1 кг действует сила ≈ 9,8 Н</li>
+</ul>`,
+
+10: `<h3>📐 Деформация</h3>
+<div class="def"><b>Деформация</b> — любое изменение формы и размера тела.</div>
+<ul>
+<li>Виды: растяжение, сжатие, сдвиг, изгиб, кручение</li>
+</ul>
+
+<h3>🔄 Сила упругости</h3>
+<div class="def"><b>Сила упругости</b> — возникает при деформации тела и стремится вернуть его в исходное положение.</div>
+<ul>
+<li>Обозначается F_упр</li>
+<li>Направлена противоположно деформации</li>
+<li>Исчезает, когда исчезает деформация</li>
+</ul>
+
+<h3>📏 Закон Гука</h3>
+<div class="formula">F_упр = k · |Δl|</div>
+<ul>
+<li>k — жёсткость тела (зависит от формы, размеров и материала)</li>
+<li>Δl — изменение длины (удлинение или сжатие)</li>
+<li>Справедлив только для <b>упругих</b> деформаций!</li>
+</ul>
+<div class="fact">Жёсткость измеряется в Н/м. У стальной пружины и резиновой — разные k.</div>`,
+
+11: `<h3>🛑 Сила трения</h3>
+<div class="def"><b>Сила трения</b> — возникает при соприкосновении тел и препятствует их относительному движению.</div>
+<ul>
+<li>Обозначается F_тр</li>
+<li>Направлена <b>противоположно</b> движению</li>
+</ul>
+
+<h3>🔍 Причины трения</h3>
+<ul>
+<li><b>Шероховатость</b> поверхностей (неровности цепляются)</li>
+<li><b>Взаимное притяжение молекул</b> соприкасающихся тел</li>
+</ul>
+
+<h3>📉 Виды трения</h3>
+<ul>
+<li><b>Трение скольжения</b> (санки по снегу)</li>
+<li><b>Трение качения</b> (колёса вагона) — всегда МЕНЬШЕ скольжения!</li>
+<li><b>Трение покоя</b> (удерживает гвоздь в доске, бант на шнурках)</li>
+</ul>
+
+<h3>💧 Как уменьшить трение?</h3>
+<ul>
+<li><b>Смазка</b> (масло) — разделяет поверхности, трение уменьшается в десятки раз</li>
+<li><b>Шариковые/роликовые подшипники</b> — уменьшают трение в 20-30 раз</li>
+<li><b>Полировка</b> поверхностей</li>
+</ul>`,
+
+12: `<h3>📌 Давление</h3>
+<div class="def"><b>Давление</b> — величина, равная отношению силы, действующей перпендикулярно поверхности, к площади этой поверхности.</div>
+<div class="formula">p = F / S</div>
+<ul>
+<li>p — давление</li>
+<li>F — сила (Н)</li>
+<li>S — площадь (м²)</li>
+</ul>
+<div class="formula">Единица давления: Паскаль (Па) = 1 Н/м²</div>
+<div class="formula">1 кПа = 1000 Па; 1 МПа = 1 000 000 Па</div>
+
+<h3>📊 Как изменить давление?</h3>
+<ul>
+<li><b>Увеличить:</b> уменьшить площадь (остриё ножа, кнопка) или увеличить силу</li>
+<li><b>Уменьшить:</b> увеличить площадь (лыжи, гусеницы трактора, широкие шины)</li>
+</ul>
+<div class="fact">Пример: мальчик 45 кг, площадь подошв 300 см² = 0,03 м². Давление = 450 Н / 0,03 м² = 15 000 Па = 15 кПа.</div>`,
+
+13: `<h3>💨 Давление газа</h3>
+<div class="def">Давление газа обусловлено <b>ударами молекул</b> о стенки сосуда.</div>
+<ul>
+<li>Молекул очень много — около 10²³ ударов на 1 см² за 1 с</li>
+<li>Газ давит на стенки <b>по всем направлениям одинаково</b></li>
+</ul>
+
+<h3>📊 Зависимость давления от объёма</h3>
+<div class="fact">При уменьшении объёма (при постоянной массе и температуре) давление газа УВЕЛИЧИВАЕТСЯ. При увеличении — уменьшается.</div>
+<div class="fact">При нагревании газа (при постоянном объёме) давление растёт — молекулы движутся быстрее, удары чаще и сильнее.</div>
+
+<h3>⚖️ Закон Паскаля</h3>
+<div class="def"><b>Закон Паскаля:</b> давление, производимое на жидкость или газ, передаётся БЕЗ ИЗМЕНЕНИЯ в каждую точку жидкости или газа.</div>
+<div class="fact">Пример: вода из шара с отверстиями бьёт одинаковыми струйками во все стороны.</div>
+<div class="fact">Газы хранят в прочных стальных баллонах — при сжатии давление сильно возрастает!</div>`,
+
+14: `<h3>💧 Давление в жидкости</h3>
+<div class="def">Внутри жидкости существует давление. На одном уровне — одинаково по всем направлениям. С глубиной — увеличивается.</div>
+<div class="formula">p = ρ · g · h</div>
+<ul>
+<li>ρ — плотность жидкости (кг/м³)</li>
+<li>g ≈ 9,8 Н/кг (округляют до 10)</li>
+<li>h — высота столба жидкости (м)</li>
+</ul>
+<div class="fact">Давление жидкости зависит ТОЛЬКО от плотности и высоты столба. От формы сосуда НЕ зависит — это гидростатический парадокс!</div>
+
+<h3>🔗 Сообщающиеся сосуды</h3>
+<div class="def"><b>Сообщающиеся сосуды</b> — сосуды, соединённые снизу (лейка, чайник, шлюзы).</div>
+<ul>
+<li>В них однородная жидкость устанавливается на ОДНОМ уровне</li>
+<li>Если жидкости разной плотности — уровни разные: чем больше плотность, тем ниже столб</li>
+</ul>
+<div class="fact">Пример: давление нефти высотой 10 м (ρ=800 кг/м³): p = 800·10·10 = 80 000 Па = 80 кПа.</div>`,
+
+15: `<h3>🌍 Атмосферное давление</h3>
+<div class="def">Воздух имеет вес! Верхние слои атмосферы сжимают нижние — так создаётся атмосферное давление.</div>
+<ul>
+<li>По закону Паскаля передаётся во все стороны</li>
+<li>С высотой — уменьшается (на каждые 12 м подъёма — минус 1 мм рт. ст.)</li>
+</ul>
+
+<h3>📊 Нормальное атмосферное давление</h3>
+<div class="formula">760 мм рт. ст. = 101 300 Па ≈ 1013 гПа</div>
+
+<h3>🔬 Опыт Торричелли (1643 г)</h3>
+<ul>
+<li>Взял трубку ~1 м, заполнил ртутью, перевернул в чашку</li>
+<li>Столб ртути высотой ~760 мм уравновешивается атмосферным давлением</li>
+<li>Над ртутью — безвоздушное пространство</li>
+</ul>
+
+<h3>🌡️ Барометры</h3>
+<ul>
+<li><b>Ртутный</b> — опыт Торричелли</li>
+<li><b>Металлический (анероид)</b> — без жидкости, с гофрированной коробочкой</li>
+<li>По барометру предсказывают погоду: падение давления — к осадкам</li>
+</ul>`,
+
+16: `<h3>🌊 Архимедова сила</h3>
+<div class="def"><b>Архимедова сила</b> (выталкивающая сила) — сила, выталкивающая тело из жидкости или газа.</div>
+<ul>
+<li>Направлена ВВЕРХ, противоположно силе тяжести</li>
+<li>Названа в честь древнегреческого учёного Архимеда</li>
+</ul>
+
+<h3>📐 Формула</h3>
+<div class="formula">F_A = ρ_ж · g · V_т</div>
+<ul>
+<li>ρ_ж — плотность жидкости (или газа)</li>
+<li>g ≈ 9,8 Н/кг</li>
+<li>V_т — объём погружённой части тела</li>
+</ul>
+<div class="fact">Архимедова сила равна ВЕСУ ЖИДКОСТИ в объёме погружённого тела.</div>
+
+<h3>🚫 От чего НЕ зависит?</h3>
+<ul>
+<li>От глубины погружения</li>
+<li>От формы тела</li>
+<li>От плотности самого тела</li>
+</ul>
+<div class="fact">Легенда: Архимед открыл свой закон, проверяя, из чистого ли золота корона царя Гиерона. Закричал «Эврика!» в ванной!</div>`,
+
+17: `<h3>🛳️ Условия плавания тел</h3>
+<div class="formula">Тело ТОНЕТ, если F_тяж > F_A (или ρ_тела > ρ_жидкости)</div>
+<div class="formula">Тело ПЛАВАЕТ, если F_тяж = F_A (или ρ_тела = ρ_жидкости)</div>
+<div class="formula">Тело ВСПЛЫВАЕТ, если F_тяж < F_A (или ρ_тела < ρ_жидкости)</div>
+
+<h3>🐟 Плавание на поверхности</h3>
+<ul>
+<li>Когда всплывающее тело достигает поверхности, Архимедова сила уменьшается (объём погружённой части меньше)</li>
+<li>Тело останавливается, когда F_A = F_тяж</li>
+<li>Вес вытесненной жидкости = весу тела в воздухе</li>
+</ul>
+
+<h3>🐠 Рыбы и киты</h3>
+<ul>
+<li>Рыба меняет объём тела с помощью плавательного пузыря</li>
+<li>Киты регулируют глубину за счёт изменения объёма лёгких</li>
+<li>Средняя плотность водных организмов ≈ плотности воды</li>
+</ul>
+
+<h3>🌊 Мёртвое море</h3>
+<div class="fact">Плотность воды Мёртвого моря ≈ 1200 кг/м³ — больше плотности тела человека (~1000 кг/м³). Человек плавает как пробка!</div>`,
+
+18: `<h3>💪 Механическая работа</h3>
+<div class="def"><b>Механическая работа</b> совершается, когда на тело действует сила и оно движется.</div>
+<div class="formula">A = F · s</div>
+<ul>
+<li>A — работа</li>
+<li>F — сила</li>
+<li>s — путь по направлению силы</li>
+</ul>
+<div class="formula">Единица работы: Джоуль (Дж) = 1 Н · 1 м</div>
+<div class="fact">Если шкаф не двигается, хотя ты его толкаешь — работа = 0! Если тело движется по инерции — работа тоже = 0.</div>
+
+<h3>⚡ Мощность</h3>
+<div class="def"><b>Мощность</b> — работа, совершённая в единицу времени.</div>
+<div class="formula">N = A / t</div>
+<ul>
+<li>N — мощность</li>
+<li>Единица: Ватт (Вт) = 1 Дж/с</li>
+<li>1 кВт = 1000 Вт; 1 МВт = 1 000 000 Вт</li>
+</ul>
+<div class="fact">Пример: работа 5000 Дж за 10 с → мощность = 500 Вт (как хороший миксер).</div>`,
+
+19: `<h3>🔧 Рычаг</h3>
+<div class="def"><b>Рычаг</b> — твёрдое тело, которое может вращаться вокруг неподвижной опоры.</div>
+<ul>
+<li>Примеры: лом, ножницы, качели, весы</li>
+<li>Известны 3000 лет — ими строили пирамиды в Египте</li>
+</ul>
+
+<h3>📏 Плечо силы</h3>
+<div class="def"><b>Плечо силы</b> — кратчайшее расстояние (перпендикуляр) от точки опоры до линии действия силы.</div>
+
+<h3>⚖️ Правило рычага (Архимед)</h3>
+<div class="formula">F₁ / F₂ = l₂ / l₁</div>
+<div class="fact">Рычаг в равновесии, если силы ОБРАТНО ПРОПОРЦИОНАЛЬНЫ плечам. Меньшей силой можно уравновесить большую — если плечо длиннее!</div>
+
+<h3>🔄 Момент силы</h3>
+<div class="formula">M = F · l</div>
+<ul>
+<li>Измеряется в Н·м</li>
+<li>Характеризует вращательное действие силы</li>
+</ul>
+<div class="fact">Легенда: «Дайте мне точку опоры, и я подниму Землю!» — Архимед.</div>`,
+
+20: `<h3>🎯 Полезная и полная работа</h3>
+<div class="def"><b>Полезная работа</b> — то, ради чего используем механизм (например, подъём груза).</div>
+<div class="def"><b>Полная (затраченная) работа</b> — вся работа, включая подъём механизма и преодоление трения.</div>
+<div class="fact">Всегда A_полн > A_полезн, потому что часть работы тратится на трение и подъём самого механизма.</div>
+
+<h3>📊 Золотое правило механики</h3>
+<div class="formula">Во сколько раз выигрываем в силе — во столько же проигрываем в пути</div>
+<div class="fact">НИ ОДИН простой механизм НЕ даёт выигрыша в работе!</div>
+
+<h3>📈 КПД (коэффициент полезного действия)</h3>
+<div class="formula">η = (A_полезн / A_полн) · 100%</div>
+<ul>
+<li>Обозначается греческой буквой η (эта)</li>
+<li>КПД ВСЕГДА меньше 100%!</li>
+<li>Чтобы увеличить: уменьшить трение (смазка, подшипники) и вес механизма</li>
+</ul>`,
+
+21: `<h3>⚡ Энергия</h3>
+<div class="def"><b>Энергия</b> — физическая величина, показывающая, какую работу может совершить тело.</div>
+<ul>
+<li>Измеряется в Джоулях (Дж), как и работа</li>
+<li>Чем большую работу может совершить тело — тем больше его энергия</li>
+</ul>
+
+<h3>🏔️ Потенциальная энергия</h3>
+<div class="def"><b>Потенциальная энергия</b> — энергия, определяемая взаимным положением тел.</div>
+<div class="formula">E_п = m · g · h</div>
+<ul>
+<li>Примеры: поднятый груз, сжатая пружина, вода в плотине</li>
+</ul>
+
+<h3>🏃 Кинетическая энергия</h3>
+<div class="def"><b>Кинетическая энергия</b> — энергия движения тела.</div>
+<div class="formula">E_к = m · v² / 2</div>
+<ul>
+<li>Зависит от массы и скорости</li>
+<li>При удвоении скорости — энергия вырастает в 4 раза!</li>
+<li>Примеры: летящая пуля, текущая вода, ветер</li>
+</ul>
+
+<h3>🔄 Превращение энергии</h3>
+<div class="fact">При падении тела: E_п → E_к. В верхней точке — максимум E_п, в нижней — максимум E_к. Закон сохранения энергии!</div>
+<div class="fact">Энергия может превращаться из одного вида в другой и передаваться от тела к телу.</div>`
+};
+
+// ========== БАЗА ДАННЫХ ВОПРОСОВ ==========
 const topics = [
   {
     id:1, num:"§1-2", title:"Что изучает физика. Физические тела и вещества",
@@ -438,7 +1071,7 @@ const topics = [
     ]
   },
   {
-    id:2, num:"§4-5", title:"Физические величины. Измерения",
+    id:2, num:"§4-6", title:"Физические величины. Измерения. Физика и техника",
     questions:[
       {q:"Что значит «измерить физическую величину»?",
        opts:["Угадать её на глаз","Сравнить её с однородной величиной, принятой за единицу","Посмотреть в учебнике","Спросить у учителя"],
@@ -708,7 +1341,7 @@ const topics = [
     ]
   },
   {
-    id:11, num:"§30-31", title:"Сила трения",
+    id:11, num:"§30-32", title:"Сила трения",
     questions:[
       {q:"Что такое СИЛА ТРЕНИЯ?",
        opts:["Сила, с которой Земля притягивает тело","Сила, возникающая при соприкосновении тел и препятствующая их относительному движению","Сила упругости","Сила, толкающая тело вперёд"],
@@ -798,7 +1431,7 @@ const topics = [
     ]
   },
   {
-    id:14, num:"§37-38", title:"Давление в жидкости. Расчёт давления",
+    id:14, num:"§37-39", title:"Давление в жидкости. Расчёт давления",
     questions:[
       {q:"От чего зависит давление жидкости на дно сосуда?",
        opts:["Только от площади дна","Только от плотности жидкости и высоты столба жидкости","От формы сосуда","От массы всей жидкости"],
@@ -828,7 +1461,7 @@ const topics = [
     ]
   },
   {
-    id:15, num:"§40-42", title:"Атмосферное давление",
+    id:15, num:"§40-43", title:"Атмосферное давление",
     questions:[
       {q:"Почему существует атмосферное давление?",
        opts:["Потому что воздух холодный","Верхние слои воздуха сжимают нижние своим весом, а воздух передаёт давление по закону Паскаля во все стороны","Потому что Земля вращается","Потому что воздух прозрачный"],
@@ -978,7 +1611,7 @@ const topics = [
     ]
   },
   {
-    id:20, num:"§61", title:"КПД механизмов",
+    id:20, num:"§60-61", title:"КПД механизмов",
     questions:[
       {q:"Что такое ПОЛЕЗНАЯ работа?",
        opts:["Вся работа, совершённая силой","Работа, которую мы хотим получить с помощью механизма (например, подъём груза)","Работа против трения","Работа по подъёму самого механизма"],
@@ -1039,11 +1672,13 @@ const topics = [
   }
 ];
 
+// ========== СОСТОЯНИЕ ==========
 let currentTopic = null;
 let currentQ = 0;
 let score = 0;
 let answered = false;
 
+// ========== ЗВЁЗДЫ ==========
 function createStars(){
   const box = document.getElementById('stars');
   for(let i=0;i<80;i++){
@@ -1060,13 +1695,13 @@ function createStars(){
 }
 createStars();
 
+// ========== РЕНДЕР ТЕМ ==========
 function renderTopics(){
   const grid = document.getElementById('topicsGrid');
   grid.innerHTML = '';
   topics.forEach(t => {
     const card = document.createElement('div');
     card.className = 'topic-card';
-    card.onclick = () => startExam(t.id);
     card.innerHTML = `
       <div class="topic-num">${t.num}</div>
       <div class="topic-title">${t.title}</div>
@@ -1074,18 +1709,54 @@ function renderTopics(){
         <span>📝 ${t.questions.length} вопросов</span>
         <span class="topic-badge">Экзамен</span>
       </div>
+      <button class="skillup-btn" onclick="openConspect(${t.id}, event)">
+        <span class="bolt">⚡</span> Скилл-ап
+      </button>
+      <button class="exam-btn" onclick="startExam(${t.id})">🚀 Начать экзамен</button>
     `;
     grid.appendChild(card);
   });
 }
 renderTopics();
 
+// ========== МОДАЛКА КОНСПЕКТА ==========
+function openConspect(topicId, event){
+  if(event) event.stopPropagation();
+  const topic = topics.find(t => t.id === topicId);
+  const conspect = conspects[topicId];
+  if(!conspect) return;
+  
+  document.getElementById('modalTitle').textContent = '⚡ СКИЛЛ-АП';
+  document.getElementById('modalSubtitle').textContent = topic.num + ' • ' + topic.title;
+  document.getElementById('modalBody').innerHTML = conspect;
+  document.getElementById('modalOverlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function closeModalOutside(event){
+  if(event.target === document.getElementById('modalOverlay')){
+    closeModal();
+  }
+}
+
+// Закрытие по Escape
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape') closeModal();
+});
+
+// ========== ПЕРЕКЛЮЧЕНИЕ ЭКРАНОВ ==========
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
+// ========== СТАРТ ЭКЗАМЕНА ==========
 function startExam(topicId){
   currentTopic = topics.find(t => t.id === topicId);
   currentQ = 0;
@@ -1097,6 +1768,7 @@ function startExam(topicId){
   loadQuestion();
 }
 
+// ========== ЗАГРУЗКА ВОПРОСА ==========
 function loadQuestion(){
   answered = false;
   const q = currentTopic.questions[currentQ];
@@ -1125,6 +1797,7 @@ function loadQuestion(){
   document.getElementById('progressFill').style.width = progress + '%';
 }
 
+// ========== ПРОВЕРКА ОТВЕТА ==========
 function checkAnswer(idx, btn){
   if(answered) return;
   answered = true;
@@ -1157,6 +1830,7 @@ function checkAnswer(idx, btn){
     currentQ === currentTopic.questions.length - 1 ? 'Завершить экзамен 🏁' : 'Следующий вопрос ➔';
 }
 
+// ========== СЛЕДУЮЩИЙ ВОПРОС ==========
 function nextQuestion(){
   currentQ++;
   if(currentQ >= currentTopic.questions.length){
@@ -1166,6 +1840,7 @@ function nextQuestion(){
   }
 }
 
+// ========== ФИНАЛ ==========
 function showFinal(){
   document.getElementById('progressFill').style.width = '100%';
   const total = currentTopic.questions.length;
@@ -1198,6 +1873,7 @@ function showFinal(){
   showScreen('screenFinal');
 }
 
+// ========== ПЕРЕЗАПУСК ==========
 function restartSame(){
   startExam(currentTopic.id);
 }
